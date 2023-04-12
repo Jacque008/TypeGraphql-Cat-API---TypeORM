@@ -1,0 +1,55 @@
+Create a new TypeGraphQL API project with express-graphql according to the following requirements step by step:
+1. use docker-compose.yml to let API connectec to a PostgreSQL container, 
+2. Create a empty table 'cats' in database with 7 properties, (id: number; name: string;  age: number;  breed: string;  color: string;  createdAt: Date;    temperament: string[];), this part should be done codely.
+3. Include 2 queries: 'getCat(id)' will get one cat by id, 'getCats(limit)' will get limited number of cats
+4. Include 3 Mutations: 'addCat(name, age, breed, color, energy_level, temperament)' to add a cat in the database, 'removeCat(id)' to remove a cat by id, 'feedCat(id)' to find cat by id, and let energy_level increase 1'
+5. the API should be ran on localhost:4000
+6. list the structure of whole project and give me the details of every file, including the package.json and the tsconfig.json
+
+version: "3"
+services:
+  api:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      - POSTGRES_HOST=postgres
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: jie
+      POSTGRES_PASSWORD: pwd123
+      POSTGRES_DB: cat_db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+      "scripts": {
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  package.json
+    "main": "index.js",
+
+  tsconfig.json
+    "include": ["src/**/*"],
+
+  UI
+    mutation {
+    addCat(
+      name: "Kkyy",
+      age: 3,
+      breed: "Siamese",
+      color: "White",
+      energy_level: 4,
+      temperament: ["Friendly", "Playful"]
+    ){id
+    name}
+    }
